@@ -254,103 +254,132 @@ lsp-bridge 开箱即用， 安装好语言对应的 [LSP 服务器](https://gith
 - `lsp-bridge-breadcrumb-mode`: 开启顶部 breadcrumb 栏
 
 ## LSP 服务器选项
-lsp-bridge 针对许多语言都提供 2 个以上的语言服务器支持， 您可以通过定制下面的选项来选择你喜欢的语言服务器:
+lsp-bridge 针对许多语言都提供多个默认服务器。按需重写下表中的变量即可切换（同一模式的多服务器列表优先于单服务器列表）：
 
-- `lsp-bridge-c-lsp-server`: C 语言的服务器， 可以选择`clangd`或者`ccls`
-- `lsp-bridge-elixir-lsp-server`: Elixir 语言的服务器， 可以选择`elixirLS`,`lexical`或者`nextls`
-- `lsp-bridge-python-lsp-server`: Python 语言的服务器， 可以选择 `basedpyright`, `pyright`, `jedi`, `python-ms`, `pylsp`, `ruff`, 需要注意的是, `lsp-bridge-multi-lang-server-mode-list` 的优先级高于 `lsp-bridge-single-lang-server-mode-list`, 如果你只想使用单服务器， 请先去掉 `lsp-bridge-multi-lang-server-mode-list` 中 python-mode 的设置
-- `lsp-bridge-ruby-lsp-server`: Ruby 语言的服务器， 可以选择 `solargraph`, `ruby-lsp`
-- `lsp-bridge-php-lsp-server`: PHP 语言的服务器， 可以选择`intelephense`或者`phpactor`
-- `lsp-bridge-tex-lsp-server`: LaTeX 语言的服务器， 可以选择`texlab`,`digestif`或者`ltex-ls`
-- `lsp-bridge-csharp-lsp-server`: C#语言的服务器， 可以选择`omnisharp-mono`, `omnisharp-dotnet` 或者 `csharp-ls`, 注意你需要给 OmniSharp 文件**执行权限**才能正常工作
-- `lsp-bridge-python-multi-lsp-server`: Python 多语言服务器， 可以选择 `basedpyright_ruff`, `pyright_ruff`, `jedi_ruff`, `python-ms_ruff`, `pylsp_ruff`
-- `lsp-bridge-nix-lsp-server`: Nix 语言的服务器， 可以选择 `rnix-lsp`, `nixd` 或者 `nil`
-- `lsp-bridge-markdown-lsp-server`: Markdown 语言的服务器， 可以选择 `vale-ls` 或者 `marksman`
-- `lsp-bridge-lua-lsp-server`: Lua 语言的服务器， 可以选择 `sumneko`, 或者 `lua-lsp`
-- `lsp-bridge-verilog-lsp-server`: Verilog 语言的服务器， 可以选择 `verible`, 或者 `svls`
-- `lsp-bridge-xml-lsp-server`: XML 语言的服务器， 可以选择 `lemminx`, 或者 `camells`
-- `lsp-bridge-cmake-lsp-server`: CMake 语言的服务器， 可以选择 `cmake-language-server`, 或者 `neocmakelsp`
+| 变量 | 可选值 / 说明 |
+| :--- | :--- |
+| `lsp-bridge-c-lsp-server` | `clangd` 或 `ccls` |
+| `lsp-bridge-elixir-lsp-server` | `elixirLS`（默认）、`lexical`、`nextls` |
+| `lsp-bridge-python-lsp-server` | `basedpyright`、`pyright`、`jedi`、`python-ms`、`pylsp`、`ruff`（想只用单服务器时，先从 `lsp-bridge-multi-lang-server-mode-list` 移除 python-mode） |
+| `lsp-bridge-python-multi-lsp-server` | `basedpyright_ruff`、`pyright_ruff`、`jedi_ruff`、`python-ms_ruff`、`pylsp_ruff` |
+| `lsp-bridge-ruby-lsp-server` | `solargraph`、`ruby-lsp` |
+| `lsp-bridge-php-lsp-server` | `intelephense`、`phpactor` |
+| `lsp-bridge-tex-lsp-server` | `texlab`、`digestif`、`ltex-ls` |
+| `lsp-bridge-csharp-lsp-server` | `omnisharp-mono`、`omnisharp-dotnet`、`csharp-ls`（OmniSharp 需要执行权限） |
+| `lsp-bridge-nix-lsp-server` | `rnix-lsp`、`nixd`、`nil` |
+| `lsp-bridge-markdown-lsp-server` | `vale-ls`、`marksman` |
+| `lsp-bridge-lua-lsp-server` | `sumneko`、`lua-lsp` |
+| `lsp-bridge-verilog-lsp-server` | `verible`、`svls` |
+| `lsp-bridge-xml-lsp-server` | `lemminx`、`camells` |
+| `lsp-bridge-cmake-lsp-server` | `cmake-language-server`、`neocmakelsp` |
 
 ## 选项
 
-- `lsp-bridge-python-command`: Python 命令的路径, 如果你用 `conda`， 你也许会定制这个选项。 Windows 平台用的是 `python.exe` 而不是 `python3`, 如果 lsp-bridge 不能工作， 可以尝试改成 `python3`
-- `lsp-bridge-complete-manually`: 只有当用户手动调用 `lsp-bridge-popup-complete-menu` 命令的时候才弹出补全菜单， 默认关闭
-- `lsp-bridge-enable-with-tramp`: 打开这个选项后， lsp-bridge 会对 tramp 打开的文件提供远程补全支持， 需要提前在服务端安装并启动 lsp_bridge.py, 注意的是这个选项只是用 tramp 打开文件， 并不会用 tramp 技术来实现补全， 因为 tramp 的实现原理有严重的性能问题。 需要注意的是， 如果你平常用 `lsp-bridge-open-remote-file` 命令， 需要关闭 `lsp-bridge-enable-with-tramp` 这个选项， 保证 `lsp-bridge-open-remote-file` 命令打开的文件可以正常跳转定义或者引用的位置。
-- `lsp-bridge-remote-save-password`: 远程编辑时， 把密码保存到 netrc 文件， 默认关闭
-- `lsp-bridge-remote-heartbeat-interval`: 远程编辑时， 可以定期(以秒为单位)给远程服务器发送心跳包， 默认关闭， 如果你会长时间让 emacs 处于闲置状态， 你可以尝试配置该选项来保持 lsp-bridge 连接不会被关闭
-- `lsp-bridge-get-workspace-folder`: 在 Java 中需要把多个项目放到一个 Workspace 目录下， 才能正常进行定义跳转， 可以自定义这个函数， 函数输入是项目路径， 返回对应的 Workspace 目录
-- `lsp-bridge-default-mode-hooks`: 自动开启 lsp-bridge 的模式列表， 你可以定制这个选项来控制开启 lsp-bridge 的范围
-- `lsp-bridge-org-babel-lang-list`: 支持 org-mode 代码块补全的语言列表， 默认 nil 对于所有语言使用
-- `lsp-bridge-find-def-fallback-function`: 当 LSP 没有找到定义时， 可以通过定制这个函数来进行候选跳转， 比如绑定 citre 函数
-- `lsp-bridge-find-ref-fallback-function`: 当 LSP 没有找到引用时， 可以通过定制这个函数来进行候选跳转， 比如绑定 citre 函数
-- `lsp-bridge-find-def-select-in-open-windows`: 当打开这个选项时， 查找定义命令会尽量选择已经打开窗口去跳转定义， 而不是在当前窗口切换 Buffer， 默认关闭
-- `lsp-bridge-enable-completion-in-string`: 支持在字符串中弹出补全， 默认关闭, 如果你只想在某些语言的字符串中弹出补全， 请自定义选项 `lsp-bridge-completion-in-string-file-types`
-- `lsp-bridge-enable-completion-in-minibuffer`: 支持在 Minibuffer 中弹出补全， 默认关闭
-- `lsp-bridge-enable-diagnostics`: 代码诊断， 默认打开
-- `lsp-bridge-enable-inlay-hint`: 类型嵌入提示， 默认关闭， 这个选项对于那些严重依赖类型提示的语言比较有用， 比如 Rust
-- `lsp-bridge-enable-hover-diagnostic`: 光标移动到错误位置弹出诊断信息， 默认关闭
-- `lsp-bridge-enable-search-words`: 索引打开文件的单词， 默认打开
-- `lsp-bridge-enable-auto-format-code`: 自动格式化代码, 默认关闭
-- `lsp-bridge-enable-signature-help`: 支持函数参数显示， 默认打开
-- `lsp-bridge-log-level`: 设置 LSP 消息日志等级， 默认为 `'default`, 除非开发目的， 平常请勿将此选项设置成`debug`, 以避免影响性能
-- `lsp-bridge-enable-debug`: 启用程序调试， 默认关闭
-- `lsp-bridge-disable-backup`: 禁止 emacs 对文件做版本管理， 默认打开
-- `lsp-bridge-code-action-enable-popup-menu`: 启用 code action 菜单， 默认打开
-- `lsp-bridge-diagnostic-fetch-idle`： 诊断延迟， 默认是停止敲键盘后 0.5 秒开始拉取诊断信息
-- `lsp-bridge-signature-show-function`: 用于显示签名信息的函数, 默认是在 minibuffer 显示， 设置成 `lsp-bridge-signature-show-with-frame` 后可以用 frame 来显示函数的签名信息
-- `lsp-bridge-signature-show-with-frame-position`: 当使用 `lsp-bridge-signature-show-with-frame` 来显示签名信息时， 这个选项定义弹出签名信息的位置， 默认是 `"bottom-right"`, 你还可以选择 `"top-left"`, `"top-right"`, `"bottom-left"`, `"point"`
-- `lsp-bridge-completion-popup-predicates`: 补全菜单显示的检查函数， 这个选项包括的所有函数都检查过以后， 补全菜单才能显示
-- `lsp-bridge-completion-stop-commands`: 这些命令执行以后， 不再弹出补全菜单
-- `lsp-bridge-completion-hide-characters`: 默认值为 `'(":" ";" "(" ")" "[" "]" "{" "}" ", " "\"")` , 光标在这些字符的后面时不弹出补全菜单， 你可以定制这个选项以解除这个限制， 或者调用 `lsp-bridge-popup-complete-menu` 命令强制弹出菜单。 为了让这个选项生效， 你需要先把 `lsp-bridge-completion-obey-trigger-characters-p` 选项设置为 nil
-- `lsp-bridge-user-langserver-dir`: 用户 langserver 配置文件目录， 如果目录下的配置文件和 [lsp-bridge/langserver](https://github.com/manateelazycat/lsp-bridge/tree/master/langserver) 里的配置文件同名， lsp-bridge 会使用这个目录下的配置文件
-- `lsp-bridge-user-multiserver-dir`: 用户 multiserver 配置文件目录， 如果目录下的配置文件和 [lsp-bridge/multiserver](https://github.com/manateelazycat/lsp-bridge/tree/master/multiserver) 里的配置文件同名， lsp-bridge 会使用这个目录下的配置文件
-- `lsp-bridge-symbols-enable-which-func`: 在`which-func`使用 lsp 后端, 默认关闭
-- `lsp-bridge-enable-org-babel`: 在 Org Babel 里使用 LSP 补全， 默认关闭, 如果没法补全
-- `lsp-bridge-peek-file-content-height`: 在 peek window 中显示多少行的文件内容
-- `lsp-bridge-peek-file-content-scroll-margin`: peek window 中内容滚动的行数
-- `lsp-bridge-peek-list-height`: 选择下一个定义和引用的备选项
-- `lsp-bridge-peek-ace-keys`: 进行 `lsp-bridge-peek-through` 时待按的按键
-- `lsp-bridge-peek-ace-cancel-keys`: 退出 `lsp-bridge-peek-through` 的按键
-- `acm-backend-order`: 补全后端的显示顺序
-- `acm-frame-background-dark-color`: 暗色主题下的菜单背景颜色
-- `acm-frame-background-light-color`: 亮色主题下的菜单背景颜色
-- `acm-enable-capf`: 针对非 LSP 后端提供 capf 补全支持， 默认是关闭的
-- `acm-enable-doc`: 补全菜单是否显示帮助文档
-- `acm-enable-icon`: 补全菜单是否显示图标 (有很多 macOS 用户反馈 emacs-plus28 无法正常显示图标， 显示的是彩色方块， 有两种方法可以解决， 安装 Emacs Mac Port 或者自己编译 Emacs 的时候给 brew 命令增加选项 `--with-rsvg` )
-， 重新编译了之后好像也没有用， 后来重新装了 emacs mac port
-- `acm-enable-doc-markdown-render`: 对补全文档中的 Markdown 内容进行语法着色， 你可以选择`'async`, `t` 或者 `nil`. 当选择`'async` 时, lsp-bridge 会采用异步渲， 当选择 `t` 时, lsp-bridge 会采用同步渲染， 同步渲染会降低补全速度， 默认是 `async` 选项
-- `acm-enable-tabnine`: 是否打开 tabnine 补全支持， 默认打开， 打开后需要运行命令 `lsp-bridge-install-tabnine` 来安装 tabnine 后就可以使用了。 TabNine 会消耗巨大的 CPU， 导致你整个电脑都卡顿， 如果电脑性能不好， 不建议开启此选项
-- `acm-enable-codeium`: 是否打开 Codeium 补全支持， 打开后需要运行命令 `lsp-bridge-install-update-codeium` 来安装 Codeium， 再运行命令 `lsp-bridge-codeium-auth` 来获取 auth token 再运行命令 `lsp-bridge-codeium-input-auth-token` 获取 API Key 后就可以使用了。
-- `acm-enable-copilot`: 启用 Copilot 支持。首先，需要在 [https://github.com/features/copilot](https://github.com/features/copilot) 购买 Copilot 服务。启用时，Copilot 可以通过两种方式运行：一种是通过 Node.js 安装（`npm install -g @github/copilot-language-server`），另一种是使用 copilot-language-server 的二进制文件/安装包。使用哪种方式由变量 `acm-backend-copilot-launch-mode` 控制，可以设置为 `auto`、`node` 或 `binary`。默认值为 `auto`，它会先尝试使用 Node.js，如果失败则尝试二进制文件。`acm-backend-copilot-node-path` 可以用来指定 Node.js 的路径（默认值：`node`），`acm-backend-copilot-binary-path` 用来指定二进制文件的路径（默认值：`copilot-language-server`）。完成安装后，执行 `lsp-bridge-copilot-login`，lsp-bridge 会在 Minibuffer 中显示一个用户代码，将其复制到 Copilot 页面以完成登录。（中国用户要确认代理配置好才能正常登录 Copilot ）
-- `acm-enable-search-file-words`: 补全菜单是否显示打开文件的单词， 默认打开
-- `acm-enable-quick-access`: 是否在图标后面显示索引， 通过 Alt + Number 来快速选择候选词， 默认关闭
-- `acm-quick-access-use-number-select`: 是否用数字键快速选择候选词， 默认关闭， 打开这个选项会导致有时候干扰数字输入或误选候选词
-- `acm-enable-yas`: yasnippet 补全， 默认打开
-- `acm-enable-citre`: [citre(ctags)](https://github.com/universal-ctags/citre) 补全， 默认关闭
-- `acm-enable-lsp-workspace-symbol`: LSP 符号补全， 默认关闭
-- `acm-doc-frame-max-lines`: 帮助窗口的最大行数， 默认是 20
-- `acm-doc-frame-boundary`: 文档框架的边界约束策略，选项包括 `'parent-frame`、`'display`，默认为 `'parent-frame`。`'parent-frame` 将文档框架限制在父 Emacs 窗口内，`'display` 允许文档框架超出 Emacs 窗口但不超出显示器边界
-- `acm-candidate-match-function`: lsp-bridge 前端对补全候选词的过滤算法， 选项有 `'regexp-quote`, `'orderless-flex`, `'orderless-literal`, `'orderless-prefixes`, `'orderless-regexp`, `'orderless-initialism`, 默认为 `regexp-quote`， orderless-\* 开头的算法需要额外安装 [orderless](https://github.com/oantolin/orderless)
-- `acm-completion-mode-candidates-merge-order`: 模式补全的显示顺序， 默认是按照 Elisp、 LSP、 Jupyter、 Ctags、 Citre、 ROAM、 单词、 Telegra 的顺序显示， 你可以根据你的需求调整模式补全的显示顺序
-- `acm-backend-lsp-candidate-min-length`: LSP 补全最小的触发字符数, 默认是 0
-- `acm-backend-lsp-block-kind-list`: 过滤某些类型的 LSP 候选词， 默认是列表， 当值为 `'("Snippet" "Enum")` 的时候， 意味着 Snippet Enum 这两种类型的补全不会显示
-- `acm-backend-elisp-candidate-min-length`: Elisp 补全最小的触发字符数, 默认是 0
-- `acm-backend-yas-candidate-min-length`: YaSnippet 补全最小的触发字符数, 默认是 0
-- `acm-backend-search-file-words-candidate-min-length`: Search Words 补全最小的触发字符数, 默认是 0
-- `acm-backend-search-file-words-max-number`: Search Words 补全候选词限制， 默认是 10
-- `acm-backend-search-file-words-enable-fuzzy-match`: Search Words 补全候选词启用模糊匹配, 默认关闭
-- `acm-backend-search-file-words-enable-fuzzy-match-threshold`: Search Words 补全候选词过滤, 过滤掉相似度小于阈值的候选词, 默认是 50
-- `acm-backend-codeium-candidate-min-length`: Codeium 补全最小的触发字符数, 默认是 0
-- `acm-backend-lsp-enable-auto-import`: 支持自动导入， 默认打开
-- `acm-backend-lsp-candidate-max-length`: LSP 候选词最大长度， 一些语言参数较长， 可以适当增加这个选项的值以看清楚参数列表
-- `acm-backend-yas-candidates-number`: yasnippet 显示个数， 默认 2 个
-- `acm-backend-citre-keyword-complete`: 根据`acm-backend-citre-keywords-alist`定义的各个模式的关键字进行补全， 需要使能 citre 后才生效
-- `acm-backend-search-sdcv-words-dictionary`: 用于单词补全的 StarDict 词典， 默认是 `kdic-ec-11w`, 可以自定义为其他 StarDict 词典， 如果你的系统存在词典 `/usr/share/stardict/dic/stardict-oxford-gb-formated-2.4.2/oxford-gb-formated.ifo`, 你需要设置这个选项为 `/usr/share/stardict/dic/stardict-oxford-gb-formated-2.4.2/oxford-gb-formated`, 不需要包括 `.ifo` 扩展
-- `acm-backend-lsp-match-mode`: lsp-bridge 后端对补全候选词的过滤算法， 选项有 "prefix", "prefixCaseSensitive", "substring" 和 "fuzzy"， 默认是 "fuzzy"
-- `acm-backend-lsp-case-mode`: lsp-bridge 后端中对补全候选词的过滤算法的大小写处理方式， 选项有 "ignore", "sensitive" 和 "smart"， 默认是 "ignore"
-- `acm-backend-lsp-frontend-filter-p`: 因为 LSP 候选词已经在 Python 后端进行了过滤， 所以没有必要在前端再进行一次过滤（参考选项 acm-candidate-match-function）, 默认为 nil, 该选项设置为 t 的时候会调用 `acm-candidate-match-function` 函数在前端对 LSP 候选词进行二次过滤
-- `acm-backend-lsp-show-progress`: 是否显示 LSP Server 工作进度, 默认关闭
-- `acm-enable-preview`: 开启 Tab-and-Go completion， 当改变当前候选时， 可以预览候选， 并且后续输入会选择预览候选， 默认关闭
+### 核心运行与项目范围
+
+| 选项 | 作用 / 默认值 |
+| :--- | :--- |
+| `lsp-bridge-python-command` | 使用的 Python 可执行文件，可指向 `python3`、`python.exe`、`conda` 环境，或包装器（`pipx`/`uv` 会转成 `pipx run`/`uv run` 并自动装依赖）。 |
+| `lsp-bridge-default-mode-hooks` | 自动启动 lsp-bridge 的模式列表，裁剪后可缩小作用范围。 |
+| `lsp-bridge-get-workspace-folder` | Java 多项目 Workspace 解析函数，入参为项目路径，返回 Workspace 目录。 |
+| `lsp-bridge-org-babel-lang-list` | 支持补全的 Org 源码块语言，`nil` 表示全部（默认）。 |
+| `lsp-bridge-enable-org-babel` | 在 Org Babel 中启用 LSP 补全（默认关闭）。 |
+| `lsp-bridge-enable-with-tramp` | 对 tramp 文件启用远程补全；使用 `lsp-bridge-open-remote-file` 时建议关闭。需要远端运行 `lsp_bridge.py`。 |
+| `lsp-bridge-remote-save-password` | 远程编辑时将密码写入 netrc（默认关闭）。 |
+| `lsp-bridge-remote-heartbeat-interval` | SSH 心跳间隔（秒），防止长时间空闲被断开（默认关闭）。 |
+| `lsp-bridge-disable-backup` | 禁用 Emacs 备份文件（默认开启）。 |
+
+### 补全、诊断与签名
+
+| 选项 | 作用 / 默认值 |
+| :--- | :--- |
+| `lsp-bridge-complete-manually` | 仅在调用 `lsp-bridge-popup-complete-menu` 时弹出补全（默认关闭）。 |
+| `lsp-bridge-completion-popup-predicates` | 所有谓词通过后才弹出补全。 |
+| `lsp-bridge-completion-stop-commands` | 执行这些命令后不再弹出补全。 |
+| `lsp-bridge-completion-hide-characters` | 光标位于这些字符后不弹出；可清空或将 `lsp-bridge-completion-obey-trigger-characters-p` 设为 `nil` 以禁用限制。 |
+| `lsp-bridge-enable-completion-in-string` | 字符串内弹出补全（默认关闭）；可用 `lsp-bridge-completion-in-string-file-types` 精细控制。 |
+| `lsp-bridge-enable-completion-in-minibuffer` | Minibuffer 补全（默认关闭）。 |
+| `lsp-bridge-enable-diagnostics` | 启用诊断（默认开启）。 |
+| `lsp-bridge-enable-hover-diagnostic` | 悬停显示诊断气泡（默认关闭）。 |
+| `lsp-bridge-diagnostic-fetch-idle` | 停止输入后多少秒获取诊断（默认 0.5 秒）。 |
+| `lsp-bridge-enable-auto-format-code` | 保存时自动格式化（默认关闭）。 |
+| `lsp-bridge-enable-signature-help` | minibuffer 显示函数签名（默认开启）。 |
+| `lsp-bridge-signature-show-function` | 选择签名显示方式；设为 `lsp-bridge-signature-show-with-frame` 可用独立窗口。 |
+| `lsp-bridge-signature-show-with-frame-position` | 签名窗口位置：`"bottom-right"`（默认）、`"top-left"`、`"top-right"`、`"bottom-left"`、`"point"`。 |
+| `lsp-bridge-enable-inlay-hint` | 启用嵌入提示（默认关闭，强类型语言实用）。 |
+| `lsp-bridge-enable-search-words` | 索引当前文件单词用于补全（默认开启）。 |
+| `lsp-bridge-log-level` | 日志等级，常用 `default`；除非调试，不建议设为 `debug`。 |
+| `lsp-bridge-enable-debug` | 开启调试辅助（默认关闭）。 |
+| `lsp-bridge-code-action-enable-popup-menu` | 启用 code action 弹窗（默认开启）。 |
+
+### 导航、Peek 与回退
+
+| 选项 | 作用 / 默认值 |
+| :--- | :--- |
+| `lsp-bridge-find-def-fallback-function` | 自定义找定义的回退逻辑（如绑定 citre）。 |
+| `lsp-bridge-find-ref-fallback-function` | 自定义找引用的回退逻辑。 |
+| `lsp-bridge-find-def-select-in-open-windows` | 跳转时优先已打开窗口（默认关闭）。 |
+| `lsp-bridge-peek-file-content-height` | peek 窗口展示的行数。 |
+| `lsp-bridge-peek-file-content-scroll-margin` | peek 内容滚动边距。 |
+| `lsp-bridge-peek-list-height` | peek 列表显示的候选数。 |
+| `lsp-bridge-peek-ace-keys` | `lsp-bridge-peek-through` 使用的按键。 |
+| `lsp-bridge-peek-ace-cancel-keys` | 退出 peek-through 的按键。 |
+
+### 用户配置目录
+
+| 选项 | 作用 / 默认值 |
+| :--- | :--- |
+| `lsp-bridge-user-langserver-dir` | 放置自定义 langserver JSON，同名文件优先于 `langserver/`。 |
+| `lsp-bridge-user-multiserver-dir` | 放置自定义 multiserver JSON，同名文件优先于 `multiserver/`。 |
+| `lsp-bridge-symbols-enable-which-func` | 在 `which-func` 使用 LSP 后端（默认关闭）。 |
+
+### ACM 补全界面与后端
+
+| 选项 | 作用 / 默认值 |
+| :--- | :--- |
+| `acm-backend-order` | 补全后端展示顺序。 |
+| `acm-frame-background-dark-color` / `acm-frame-background-light-color` | 暗/亮主题下的菜单背景色。 |
+| `acm-enable-capf` | 为非 LSP 后端提供 CAPF 补全（默认关闭）。 |
+| `acm-enable-doc` | 补全框显示文档。 |
+| `acm-enable-doc-markdown-render` | 补全文档 Markdown 渲染，`'async`（默认）、`t`（同步）、`nil`（纯文本）。 |
+| `acm-enable-icon` | 补全菜单显示图标（macOS 需 rsvg 支持或 Emacs Mac Port）。 |
+| `acm-enable-tabnine` | TabNine 后端（默认开启，需执行 `lsp-bridge-install-tabnine`，耗 CPU）。 |
+| `acm-enable-codeium` | Codeium 后端；执行 `lsp-bridge-install-update-codeium`，再用 `lsp-bridge-codeium-auth` + `lsp-bridge-codeium-input-auth-token` 登录。 |
+| `acm-enable-copilot` | Copilot 后端；通过 `lsp-bridge-copilot-login` 登录。启动方式由 `acm-backend-copilot-launch-mode` 控制（`auto`/`node`/`binary`），路径由 `acm-backend-copilot-node-path`、`acm-backend-copilot-binary-path` 指定。 |
+| `acm-enable-search-file-words` | 补全中显示当前文件单词（默认开启）。 |
+| `acm-enable-quick-access` | 图标后显示索引，Alt+数字快速选择（默认关闭）。 |
+| `acm-quick-access-use-number-select` | 直接用数字键快速选择（默认关闭）。 |
+| `acm-enable-yas` | yasnippet 后端（默认开启）。 |
+| `acm-enable-citre` | citre/ctags 后端（默认关闭）。 |
+| `acm-enable-lsp-workspace-symbol` | 工作区符号补全（默认关闭）。 |
+| `acm-doc-frame-max-lines` | 文档窗口最大行数（默认 20）。 |
+| `acm-doc-frame-boundary` | 文档窗口边界策略：`'parent-frame`（默认）或 `'display`。 |
+| `acm-candidate-match-function` | 前端过滤算法：`regexp-quote`（默认）或 orderless 方案（需安装 orderless）。 |
+| `acm-completion-mode-candidates-merge-order` | 模式候选合并优先级（默认：Elisp、LSP、Jupyter、Tabby Ctags、Citre、ROAM、Word、Telegra）。 |
+| `acm-enable-preview` | 启用 Tab-and-Go 预览（默认关闭）。 |
+
+### 后端阈值与过滤
+
+| 选项 | 作用 / 默认值 |
+| :--- | :--- |
+| `acm-backend-lsp-candidate-min-length` | 触发 LSP 补全的最小字符数（默认 0）。 |
+| `acm-backend-lsp-candidate-max-length` | LSP 候选最大长度（语言参数长时可调大）。 |
+| `acm-backend-lsp-match-mode` | LSP 过滤模式：`"prefix"`、`"prefixCaseSensitive"`、`"substring"`、`"fuzzy"`（默认）。 |
+| `acm-backend-lsp-case-mode` | LSP 大小写处理：`"ignore"`（默认）、`"sensitive"`、`"smart"`。 |
+| `acm-backend-lsp-frontend-filter-p` | 后端过滤后是否再走前端过滤（默认关闭）。 |
+| `acm-backend-lsp-enable-auto-import` | 自动插入 import（默认开启）。 |
+| `acm-backend-lsp-block-kind-list` | 隐藏指定 LSP 候选类型（如 `(\"Snippet\" \"Enum\")`）。 |
+| `acm-backend-lsp-show-progress` | 显示 LSP 进度（默认关闭）。 |
+| `acm-backend-elisp-candidate-min-length` | Elisp 补全最小字符数（默认 0）。 |
+| `acm-backend-yas-candidate-min-length` | yasnippet 补全最小字符数（默认 0）。 |
+| `acm-backend-yas-candidates-number` | yasnippet 展示数量（默认 2）。 |
+| `acm-backend-search-file-words-candidate-min-length` | 文件单词补全最小字符数（默认 0）。 |
+| `acm-backend-search-file-words-max-number` | 文件单词补全最大候选数（默认 10）。 |
+| `acm-backend-search-file-words-enable-fuzzy-match` | 文件单词补全启用模糊匹配（默认关闭）。 |
+| `acm-backend-search-file-words-enable-fuzzy-match-threshold` | 模糊匹配阈值（默认 50）。 |
+| `acm-backend-search-sdcv-words-dictionary` | StarDict 词典路径（默认 `kdic-ec-11w`，不含 `.ifo` 后缀）。 |
+| `acm-backend-codeium-candidate-min-length` | Codeium 补全最小字符数（默认 0）。 |
+| `acm-backend-citre-keyword-complete` | 依据 `acm-backend-citre-keywords-alist` 的关键词补全（需先启用 citre）。 |
 
 ## 已经支持的语言服务器
 

@@ -259,102 +259,132 @@ more detail about using lsp-bridge in devcontainer please refer to [emacs-devcon
 - `lsp-bridge-breadcrumb-mode`: Enable or disable breadcrumb headline
 
 ## LSP server options
-lsp-bridge provides support for more than two language servers for many languages. You can customize the following options to choose the language server you prefer:
+lsp-bridge ships multiple default servers per language. Override any row below to pick your preferred backend (multi-server lists take precedence over single-server lists for the same mode):
 
-- `lsp-bridge-c-lsp-server`: C language server, you can choose `clangd` or`ccls`
-- `lsp-bridge-elixir-lsp-server`: Elixir language server, you can choose `elixirLS`(default), `lexical` or `nextls`
-- `lsp-bridge-python-lsp-server`: Python language server, you can choose `basedpyright`, `pyright`, `jedi`, `python-ms`, `pylsp`, `ruff`, it's important to note that lsp-bridge-multi-lang-server-mode-list has a higher priority than lsp-bridge-single-lang-server-mode-list. If you only want to use a single server, please first remove the python-mode setting from lsp-bridge-multi-lang-server-mode-list.
-- `lsp-bridge-ruby-lsp-server`: Ruby language server, you can choose `solargraph`, `ruby-lsp`
-- `lsp-bridge-php-lsp-server`: PHP language server, you can choose `intelephense` or `phpactor`
-- `lsp-bridge-tex-lsp-server`: LaTeX language server, you can choose `texlab`, `digestif` or `ltex-ls`
-- `lsp-bridge-csharp-lsp-server`: C# language server, you can choose `omnisharp-mono`, `omnisharp-dotnet` or `csharp-ls`, note that you need to give **execute permissions** to the OmniSharp file
-- `lsp-bridge-python-multi-lsp-server`: Python multi-language servers, you can choose `basedpyright_ruff`, `pyright_ruff`, `jedi_ruff`, `python-ms_ruff`, `pylsp_ruff`
-- `lsp-bridge-nix-lsp-server`: Nix language server, you can choose `rnix-lsp`, `nixd` or `nil`
-- `lsp-bridge-markdown-lsp-server`: Markdown language server, you can choose `vale-ls` or `marksman`
-- `lsp-bridge-lua-lsp-server`: Lua language server, you can choose `sumneko` or `lua-lsp`
-- `lsp-bridge-verilog-lsp-server`: Verilog language server， you can choose `verible`, or `svls`
-- `lsp-bridge-xml-lsp-server`: XML language server， you can choose `lemminx`, or `camells`
-- `lsp-bridge-cmake-lsp-server`: CMake language server， you can choose `cmake-language-server`, or `neocmakelsp`
+| Variable | Choices / Notes |
+| :--- | :--- |
+| `lsp-bridge-c-lsp-server` | `clangd` or `ccls` |
+| `lsp-bridge-elixir-lsp-server` | `elixirLS` (default), `lexical`, `nextls` |
+| `lsp-bridge-python-lsp-server` | `basedpyright`, `pyright`, `jedi`, `python-ms`, `pylsp`, `ruff` (remove python-mode from `lsp-bridge-multi-lang-server-mode-list` if you want a single backend only) |
+| `lsp-bridge-python-multi-lsp-server` | `basedpyright_ruff`, `pyright_ruff`, `jedi_ruff`, `python-ms_ruff`, `pylsp_ruff` |
+| `lsp-bridge-ruby-lsp-server` | `solargraph`, `ruby-lsp` |
+| `lsp-bridge-php-lsp-server` | `intelephense`, `phpactor` |
+| `lsp-bridge-tex-lsp-server` | `texlab`, `digestif`, `ltex-ls` |
+| `lsp-bridge-csharp-lsp-server` | `omnisharp-mono`, `omnisharp-dotnet`, `csharp-ls` (OmniSharp binary must be executable) |
+| `lsp-bridge-nix-lsp-server` | `rnix-lsp`, `nixd`, `nil` |
+| `lsp-bridge-markdown-lsp-server` | `vale-ls`, `marksman` |
+| `lsp-bridge-lua-lsp-server` | `sumneko`, `lua-lsp` |
+| `lsp-bridge-verilog-lsp-server` | `verible`, `svls` |
+| `lsp-bridge-xml-lsp-server` | `lemminx`, `camells` |
+| `lsp-bridge-cmake-lsp-server` | `cmake-language-server`, `neocmakelsp` |
 
 ## Options
 
-- `lsp-bridge-python-command`: The path of the python command, if you use `conda`, you may customize this option. Windows platform using `python.exe` rather than `python3`, if lsp-bridge can’t work, try set to `python3`. If you set `pipx` or `uv`, these are translated to `pipx run` or `uv run` which execute the lsp_bridge.py in a temporal virtual environment where dependencies are automatically installed.
-- `lsp-bridge-complete-manually`: Only popup completion menu when user call `lsp-bridge-popup-complete-menu` command, default is nil
-- `lsp-bridge-enable-with-tramp`: When this option is enabled, lsp-bridge provides remote autocompletion support for files opened by tramp. It requires the lsp_bridge.py to be installed and started on the server side in advance. Note that this option only uses tramp to open files, it does not use tramp technology to implement autocompletion, because the implementation principle of tramp has serious performance issues. 'One should note that if you usually use the command `lsp-bridge-open-remote-file`, you need to disable the option `lsp-bridge-enable-with-tramp` to ensure that the file opened by the command can correctly jump to the definitions or references.
-- `lsp-bridge-remote-save-password`: Saves the password for remote editing to the netrc file, disabled by default
-- `lsp-bridge-remote-heartbeat-interval`: Interval for sending heartbeat to server in seconds, disabled by default, set it to a suitable value for your server sshd if you want to keep the connection alive after a long idle time.
-- `lsp-bridge-get-workspace-folder`: You need to put multiple project in a `workspace` directory in Java before you can jump function defintion normally. This function can be customized, the function input is the project path and returns the `workspace` directory corresponding
-- `lsp-bridge-default-mode-hooks`: The list of modes that automatically start lsp-bridge, you can customize this option to control the scope of starting lsp-bridge
-- `lsp-bridge-org-babel-lang-list`: list of language to support org-mode code block completion, nil enable all languages, default is nil
-- `lsp-bridge-find-def-fallback-function`: When LSP cannot find a definition, you can customize this function for candidate jumping, such as binding the citre function
-- `lsp-bridge-find-ref-fallback-function`: When LSP cannot find a reference, you can customize this function for candidate jumping, such as binding the citre  function
-- `lsp-bridge-find-def-select-in-open-windows`: If this option is turned on, when searching for function definitions, already open windows will be selected instead of switching buffers. disable by default
-- `lsp-bridge-enable-completion-in-string`: Enable completion pop-up within strings, disabled by default, if you only want to show completion popups in strings for certain languages, please customize the option `lsp-bridge-completion-in-string-file-types`
-- `lsp-bridge-enable-completion-in-minibuffer`: Enable pop-completion up in Minibuffer, disabled by default
-- `lsp-bridge-enable-diagnostics`: code diagnostic, enable by default
-- `lsp-bridge-enable-inlay-hint`: inlay hint, disable by default, this option is use for strong type language, such as, Rust
-- `lsp-bridge-enable-hover-diagnostic`: show diagnostic tooltip when cursor hover diagnostic place, disable by default
-- `lsp-bridge-enable-search-words`: index the word of the file, enable by default
-- `lsp-bridge-enable-auto-format-code`: automatic format code, disable by default
-- `lsp-bridge-enable-signature-help`: show function parameter in minibufer, enable by default
-- `lsp-bridge-log-level`: set LSP message level. see the `descript-variable lsp-bridge-log-level` for more detail, usually do no set it `debug` to avoid affecting performance
-- `lsp-bridge-enable-debug`: enable program debugging, disable by default
-- `lsp-bridge-disable-backup`: forbidden version manage of emacs, enable by default
-- `lsp-bridge-code-action-enable-popup-menu`: enable code action popup menu, enable by default
-- `lsp-bridge-diagnostic-fetch-idle`: diagnostic delay, start pulling diagnostic information 0.5 second after stopping typing
-- `lsp-bridge-signature-show-function`: The function used for displaying signature info, default show message in minibuffer, set `lsp-bridge-signature-show-with-frame` to show signature info in frame
-- `lsp-bridge-signature-show-with-frame-position`: When using `lsp-bridge-signature-show-with-frame` to display signature information, this option defines the position of the pop-up signature information, the default is `"bottom-right"`, you can also choose `"top-left"`, `"top-right"`, `"bottom-left"`, `"point"`
-- `lsp-bridge-completion-popup-predicates`: the predicate function for completion menu, completion menu popup after all the functions pass
-- `lsp-bridge-completion-stop-commands`: completion menu will not popup if these commands are executed
-- `lsp-bridge-completion-hide-characters`: The default value is `‘(":" ";" "(" ")" "[" "]" "{" "}" ", " "\"")`, the completion menu does not pop up when the cursor is behind these characters. You can customize this option to remove this restriction, or call the `lsp-bridge-popup-complete-menu` command to force the menu to pop up. To make this option works, you need to set `lsp-bridge-completion-obey-trigger-characters-p` to nil.
-- `lsp-bridge-user-langserver-dir`: the dir where user place langserver configuration file, if the configuration file name in the dir is the same as that in [lsp-bridge/langserver](https://github.com/manateelazycat/lsp-bridge/tree/master/langserver) , lsp-bridge will use the configuration file in this dir
-- `lsp-bridge-user-multiserver-dir`: the dir where user place multiserver configuration file, if the configuration file name in the dir is the same as that in [lsp-bridge/multiserver](https://github.com/manateelazycat/lsp-bridge/tree/master/multiserver) , lsp-bridge will use the configuration file in this dir
-- `lsp-bridge-symbols-enable-which-func`: Using lsp backend for `which-func`, disable by default
-- `lsp-bridge-enable-org-babel`: Use lsp completion in org babel, disable by default
-- `lsp-bridge-peek-file-content-height`: Display how many lines of file content in peek windows
-- `lsp-bridge-peek-file-content-scroll-margin`: Set how many lines of file content should be scroll up and down.
-- `lsp-bridge-peek-list-height`: Select the next option for definition and reference
-- `lsp-bridge-peek-ace-keys`: Keys to press when performing `lsp-bridge-peek-through`
-- `lsp-bridge-peek-ace-cancel-keys`: Keys to exit `lsp-bridge-peek-through`
-- `acm-backend-order`: Customize the order of the completion backends
-- `acm-frame-background-dark-color`: Menu background color in dark theme
-- `acm-frame-background-light-color`: Menu background color in light theme
-- `acm-enable-capf`: Provides capf completion support for non-LSP backends, it is disabled by default
-- `acm-enable-doc`: Whether the complete menu display the help document
-- `acm-enable-doc-markdown-render`: Richly render Markdown for completion popups, you can choose `'async`, `t` or `nil`. When set to `'async`, styles are applied asynchronously, choose `t`, styles are applied synchronously and will slow down the completion speed, default is `'async`
-- `acm-enable-icon`: Whether the completion menu displays icons (Many macOS users have reported that emacs-plus28 cannot display icons properly, showing colored squares instead. There are two ways to solve this: install Emacs Mac Port or add the `--with-rsvg` option to the brew command when compiling Emacs yourself)
-- `acm-enable-tabnine`: Enable tabnine support， enable by default， when enable need execute `lsp-bridge-install-tabnine` command to install TabNine, and it can be used. TabNine will consume huge CPUs, causing your entire computer to be slow. If the computer performance is not good, it is not recommended to enable this option
-- `acm-enable-codeium`: Enable Codeium support, when enable need execute `lsp-bridge-install-update-codeium` command to install Codeium, then execute `lsp-bridge-codeium-auth` command to get auth token and execute `lsp-bridge-codeium-input-auth-token` command to get API Key, and it can be used.
-- `acm-enable-copilot`: Enable copilot support. First, purchase the Copilot service at [https://github.com/features/copilot](https://github.com/features/copilot). When enabling, you can run Copilot in two ways: either by installing via Node.js (`npm install -g @github/copilot-language-server`) or by using the copilot-language-server binary/package. The method used is controlled by the `acm-backend-copilot-launch-mode` variable, which can be set to `auto`, `node`, or `binary`. The default is `auto`, which first attempts Node.js and then falls back to the binary. You can specify the Node.js path with `acm-backend-copilot-node-path` (default: `node`), and the binary path with `acm-backend-copilot-binary-path` (default: `copilot-language-server`). To complete login, execute `lsp-bridge-copilot-login`; lsp-bridge will display a User Code in the Minibuffer, which you should copy into the Copilot page to finish authentication.
-- `acm-enable-search-file-words`: Whether the complete menu display the word of the file, enable by default
-- `acm-enable-quick-access`: Whether to display an index after the icon, quickly select candidate words using Alt + Number, default is off
-- `acm-quick-access-use-number-select`: Whether to use number keys for quick selection of candidate words, default is off, turning on this option may sometimes interfere with number input or accidentally select candidate words
-- `acm-enable-yas`: yasnippet completion, enable by default
-- `acm-enable-citre`: Integration with [citre(ctags)](https://github.com/universal-ctags/citre). Enable this to add citre (ctags) backend (disabled by default)
-- `acm-enable-lsp-workspace-symbol`: Enable LSP workspace symbol completion, disabled by default
-- `acm-doc-frame-max-lines`: Max line number of help documentation, default is 20
-- `acm-doc-frame-boundary`: Boundary constraint for documentation frame positioning, options include `'parent-frame`, `'display`, default is `'parent-frame`. `'parent-frame` constrains the doc frame within the parent Emacs frame, `'display` allows the doc frame to extend beyond Emacs frame but within display screen boundaries
-- `acm-candidate-match-function`: lsp-bridge frontend filter algorithm for candidates, options include `'regexp-quote`, `'orderless-flex`, `'orderless-literal`, `'orderless-prefixes`, `'orderless-regexp`, `'orderless-initialism`, default is `regexp-quote`, orderless-* started algorithms require additional installation of [orderless](https://github.com/oantolin/orderless)
-- `acm-completion-mode-candidates-merge-order`: Customize the order of the mode candidates, the display order for mode candidates, default order: Elisp、 LSP、 Jupyter、 Tabby Ctags、 Citre、 ROAM、 Word、 Telegra
-- `acm-backend-lsp-candidate-min-length`: The minimum characters to trigger lsp completion, default is 0
-- `acm-backend-lsp-block-kind-list`: Filters certain types of LSP completion candidates. By default, it's a empty list. When the value is set to `'(Snippet Enum)`, this means that Snippet and Enum completions will not be shown.
-- `acm-backend-elisp-candidate-min-length`: The minimum characters to trigger elisp completion, default is 0
-- `acm-backend-yas-candidate-min-length`: The minimum characters to trigger yasnippet completion, default is 0
-- `acm-backend-search-file-words-candidate-min-length`: The minimum characters to trigger search file words completion, default is 0
-- `acm-backend-search-file-words-max-number`: Search Words completion candidate limit, default is 10
-- `acm-backend-search-file-words-enable-fuzzy-match`: Search Words completion candidate fuzzy match, disable by default
-- `acm-backend-search-file-words-enable-fuzzy-match-threshold`: Search Words completion candidate fuzzy match threshold, Filter out words with a ratio lower than the threshold, default is 50
-- `acm-backend-codeium-candidate-min-length`: The minimum characters to trigger codeium completion, default is 0
-- `acm-backend-lsp-enable-auto-import`: Automatic insert import code, enable by default
-- `acm-backend-lsp-candidate-max-length`: Maximum length of LSP candidate, some language, such as Java, argument list is very long, you can increase the value of this option to see clear argument list
-- `acm-backend-yas-candidates-number`: yasnippet display number， 2 by default
-- `acm-backend-citre-keyword-complete`: Completion is performed according to the keywords of each mode defined by `acm-backend-citre-keywords-alist`, which takes effect only after citre is enabled.
-- `acm-backend-search-sdcv-words-dictionary`: StarDict dictionary for word completion, default is `kdic-ec-11w`, you can replace it with StarDict dictionary path, example, if you have dictionary `/usr/share/stardict/dic/stardict-oxford-gb-formated-2.4.2/oxford-gb-formated.ifo`, you need set this value to `/usr/share/stardict/dic/stardict-oxford-gb-formated-2.4.2/oxford-gb-formated`, not include `.ifo` extension.
-- `acm-backend-lsp-match-mode`: The filtering mode for candidates in LSP backend, there are six options: "prefix", "prefixCaseSensitive", "substring" and "fuzzy". By default it is "fuzzy"
-- `acm-backend-lsp-case-mode`: The case sensitive mode for filtering candidates in LSP backend, there are three options: "ignore", "sensitive" and "smart". By default it is "ignore"
-- `acm-backend-lsp-frontend-filter-p`: Since LSP candidates have been filtered in the Python backend, it's not necessary to perform an additional filter on the frontend (refer to option `acm-candidate-match-function`), disable by default, when set to `t`, this option will call the `acm-candidate-match-function` function on the frontend to filter LSP candidates again
-- `acm-backend-lsp-show-progress`: show working progress, disable by default
-- `acm-enable-preview`: enable Tab-and-Go completion, commands like acm-select-* will select and preview other candidate and further input will then commit this candidate, disable by default
+### Core runtime & project scope
+
+| Option | Purpose / Default |
+| :--- | :--- |
+| `lsp-bridge-python-command` | Python executable used by the bridge; accepts `python`, `python3`, `python.exe`, `conda` env paths, or wrappers (`pipx`, `uv` translate to `pipx run`/`uv run`). |
+| `lsp-bridge-default-mode-hooks` | Modes that auto-start lsp-bridge. Trim to limit scope. |
+| `lsp-bridge-get-workspace-folder` | For Java multi-project workspaces; function receives project path and returns workspace directory. |
+| `lsp-bridge-org-babel-lang-list` | Org src blocks to complete; `nil` enables all (default). |
+| `lsp-bridge-enable-org-babel` | Enable LSP completion in Org Babel (off by default). |
+| `lsp-bridge-enable-with-tramp` | Remote completion for tramp files; keep off when using `lsp-bridge-open-remote-file`. Requires remote `lsp_bridge.py`. |
+| `lsp-bridge-remote-save-password` | Cache remote passwords to netrc (off by default). |
+| `lsp-bridge-remote-heartbeat-interval` | Seconds between SSH heartbeats to keep long-idle sessions alive (off by default). |
+| `lsp-bridge-disable-backup` | Disable Emacs backups for edited files (on by default). |
+
+### Completion, diagnostics, and signatures
+
+| Option | Purpose / Default |
+| :--- | :--- |
+| `lsp-bridge-complete-manually` | Only show completion when calling `lsp-bridge-popup-complete-menu` (off by default). |
+| `lsp-bridge-completion-popup-predicates` | Predicates that must pass before showing completion. |
+| `lsp-bridge-completion-stop-commands` | Commands that suppress completion. |
+| `lsp-bridge-completion-hide-characters` | Characters that suppress popup; clear or set `lsp-bridge-completion-obey-trigger-characters-p` to `nil` to override. |
+| `lsp-bridge-enable-completion-in-string` | Allow completion inside strings (off by default); refine with `lsp-bridge-completion-in-string-file-types`. |
+| `lsp-bridge-enable-completion-in-minibuffer` | Completion in minibuffer (off by default). |
+| `lsp-bridge-enable-diagnostics` | Enable diagnostics (on by default). |
+| `lsp-bridge-enable-hover-diagnostic` | Show tooltip on diagnostic hover (off by default). |
+| `lsp-bridge-diagnostic-fetch-idle` | Idle delay before fetching diagnostics (default 0.5s). |
+| `lsp-bridge-enable-auto-format-code` | Auto format on save (off by default). |
+| `lsp-bridge-enable-signature-help` | Signature help in minibuffer (on by default). |
+| `lsp-bridge-signature-show-function` | Choose signature display function; set to `lsp-bridge-signature-show-with-frame` for framed UI. |
+| `lsp-bridge-signature-show-with-frame-position` | Position of signature frame: `"bottom-right"` (default), `"top-left"`, `"top-right"`, `"bottom-left"`, `"point"`. |
+| `lsp-bridge-enable-inlay-hint` | Inlay hints (off by default; useful for strongly typed languages). |
+| `lsp-bridge-enable-search-words` | Index buffer words for completion (on by default). |
+| `lsp-bridge-log-level` | Log level (`default` typical; avoid `debug` unless needed). |
+| `lsp-bridge-enable-debug` | Extra debugging hooks (off by default). |
+| `lsp-bridge-code-action-enable-popup-menu` | Code action popup menu (on by default). |
+
+### Navigation, peek, and fallbacks
+
+| Option | Purpose / Default |
+| :--- | :--- |
+| `lsp-bridge-find-def-fallback-function` | Custom fallback for definitions (e.g., citre). |
+| `lsp-bridge-find-ref-fallback-function` | Custom fallback for references. |
+| `lsp-bridge-find-def-select-in-open-windows` | Prefer existing windows when jumping to definitions (off by default). |
+| `lsp-bridge-peek-file-content-height` | Lines of file content shown in peek window. |
+| `lsp-bridge-peek-file-content-scroll-margin` | Scroll margin inside peek content. |
+| `lsp-bridge-peek-list-height` | Number of candidates shown in peek list. |
+| `lsp-bridge-peek-ace-keys` | Keys for `lsp-bridge-peek-through`. |
+| `lsp-bridge-peek-ace-cancel-keys` | Keys to cancel peek-through. |
+
+### User configuration directories
+
+| Option | Purpose / Default |
+| :--- | :--- |
+| `lsp-bridge-user-langserver-dir` | Override langserver JSON configs by placing files with matching names here. |
+| `lsp-bridge-user-multiserver-dir` | Override multiserver JSON configs with same-name files. |
+| `lsp-bridge-symbols-enable-which-func` | Use LSP backend for `which-func` (off by default). |
+
+### ACM completion UI and backends
+
+| Option | Purpose / Default |
+| :--- | :--- |
+| `acm-backend-order` | Order of completion backends. |
+| `acm-frame-background-dark-color` / `acm-frame-background-light-color` | Completion menu background colors. |
+| `acm-enable-capf` | CAPF support for non-LSP backends (off by default). |
+| `acm-enable-doc` | Show documentation in completion popup. |
+| `acm-enable-doc-markdown-render` | Render Markdown in docs (`'async` default, `t` synchronous, `nil` plain). |
+| `acm-enable-icon` | Show icons (requires Emacs with rsvg support on macOS). |
+| `acm-enable-tabnine` | TabNine backend (on by default; heavy CPU). Run `lsp-bridge-install-tabnine` once. |
+| `acm-enable-codeium` | Codeium backend; run `lsp-bridge-install-update-codeium`, then auth with `lsp-bridge-codeium-auth` + `lsp-bridge-codeium-input-auth-token`. |
+| `acm-enable-copilot` | Copilot backend; login via `lsp-bridge-copilot-login`. Choose launch mode with `acm-backend-copilot-launch-mode` (`auto`/`node`/`binary`); paths via `acm-backend-copilot-node-path` or `acm-backend-copilot-binary-path`. |
+| `acm-enable-search-file-words` | Include words from open files (on by default). |
+| `acm-enable-quick-access` | Alt+Number quick-select overlay (off by default). |
+| `acm-quick-access-use-number-select` | Use number keys directly for quick select (off by default). |
+| `acm-enable-yas` | yasnippet backend (on by default). |
+| `acm-enable-citre` | citre/ctags backend (off by default). |
+| `acm-enable-lsp-workspace-symbol` | Workspace symbol completion (off by default). |
+| `acm-doc-frame-max-lines` | Max lines in doc frame (default 20). |
+| `acm-doc-frame-boundary` | Doc frame boundary: `'parent-frame` (default) or `'display`. |
+| `acm-candidate-match-function` | Frontend filter: `regexp-quote` (default) or orderless variants (requires orderless). |
+| `acm-completion-mode-candidates-merge-order` | Merge priority for mode candidates (default: Elisp, LSP, Jupyter, Tabby Ctags, Citre, ROAM, Word, Telegra). |
+| `acm-enable-preview` | Tab-and-Go preview behavior (off by default). |
+
+### Backend thresholds and filters
+
+| Option | Purpose / Default |
+| :--- | :--- |
+| `acm-backend-lsp-candidate-min-length` | Minimum chars to trigger LSP completion (0). |
+| `acm-backend-lsp-candidate-max-length` | Truncate long LSP candidates (increase for verbose languages like Java). |
+| `acm-backend-lsp-match-mode` | LSP candidate filter: `"prefix"`, `"prefixCaseSensitive"`, `"substring"`, `"fuzzy"` (default). |
+| `acm-backend-lsp-case-mode` | Case handling: `"ignore"` (default), `"sensitive"`, `"smart"`. |
+| `acm-backend-lsp-frontend-filter-p` | Apply frontend filter after backend (off by default). |
+| `acm-backend-lsp-enable-auto-import` | Auto-insert imports (on by default). |
+| `acm-backend-lsp-block-kind-list` | Hide specific LSP kinds (e.g., `(Snippet Enum)`). |
+| `acm-backend-lsp-show-progress` | Show LSP progress (off by default). |
+| `acm-backend-elisp-candidate-min-length` | Minimum chars for Elisp completion (0). |
+| `acm-backend-yas-candidate-min-length` | Minimum chars for yasnippet completion (0). |
+| `acm-backend-yas-candidates-number` | Number of yasnippet candidates (default 2). |
+| `acm-backend-search-file-words-candidate-min-length` | Minimum chars for file-words completion (0). |
+| `acm-backend-search-file-words-max-number` | Max file-words candidates (10). |
+| `acm-backend-search-file-words-enable-fuzzy-match` | Enable fuzzy match for file words (off by default). |
+| `acm-backend-search-file-words-enable-fuzzy-match-threshold` | Fuzzy match threshold for file words (50). |
+| `acm-backend-search-sdcv-words-dictionary` | StarDict dictionary path (default `kdic-ec-11w`; omit `.ifo`). |
+| `acm-backend-codeium-candidate-min-length` | Minimum chars for Codeium completion (0). |
+| `acm-backend-citre-keyword-complete` | Keyword completion from `acm-backend-citre-keywords-alist` (requires citre). |
 
 ## Supported language servers
 
