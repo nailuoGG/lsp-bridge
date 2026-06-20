@@ -1,0 +1,19 @@
+lsp_bridge.py
+  s_66b4d52fb5ab8d::t_ff850e4e746bc6 35-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "35621a77c3730252b810287f8b14099281f53d9f",
+  "prompts": {},
+  "sessions": {
+    "s_66b4d52fb5ab8d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "13a7a406-f266-491c-8741-a9214df96b50",
+        "model": "glm-5.2"
+      },
+      "human_author": "James L. <nailuogg@gmail.com>"
+    }
+  }
+}
