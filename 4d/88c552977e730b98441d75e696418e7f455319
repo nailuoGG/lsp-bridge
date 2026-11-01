@@ -1,0 +1,52 @@
+README.zh-CN.md
+  s_d49e6afd40fd94::t_91d1be1584680d 600-601,604
+  s_8189eda1a6befe::t_0f621e0fb3b6da 586-599
+test/test_langserver.py
+  s_d49e6afd40fd94::t_99981b65d426ec 43-60,64-75
+  s_d49e6afd40fd94::t_9d99f781d62288 61-63
+lsp-bridge.el
+  s_d49e6afd40fd94::t_890aa855b6c691 696,837-839
+README.md
+  s_8189eda1a6befe::t_323c2665a359c8 589-602
+  s_d49e6afd40fd94::t_58296572bd8026 603-604,607
+langserver/surge.json
+  s_d49e6afd40fd94::t_4f22ebe61571c3 9
+  s_d49e6afd40fd94::t_f82dc51340caf6 1-8,10-24
+core/lspserver.py
+  s_8189eda1a6befe::t_40fb2c482e805b 1060
+  s_8189eda1a6befe::t_64139289148928 39,1057,1059,1061-1074
+  s_8189eda1a6befe::t_ada48fef591957 1092-1093
+  s_8189eda1a6befe::t_263fd4bc1b67f0 30,81-141,372-377,425,682-684,686-687,1054-1056,1058,1077-1079,1083,1169
+  s_8189eda1a6befe::t_1e241a2b627f10 1075
+langserver/surge_darwin.json
+  s_d49e6afd40fd94::t_5923fbdff917f6 9
+  s_d49e6afd40fd94::t_50b50baad74e38 1-8,10-24
+test/test_workspace_watch_files.py
+  s_8189eda1a6befe::t_b7a3a0e36a4d1a 121-164
+  s_8189eda1a6befe::t_a0faf46565c1cd 1-93,95-120,165-186
+  s_8189eda1a6befe::t_214ed030b73e3e 94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4d88c552977e730b98441d75e696418e7f455319",
+  "prompts": {},
+  "sessions": {
+    "s_8189eda1a6befe": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a14909-4483-74fb-927d-2ba644c3a87b",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "James L. <nailuogg@gmail.com>"
+    },
+    "s_d49e6afd40fd94": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a18ff8-6f62-74d8-8543-310186f7f133",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "James L. <nailuogg@gmail.com>"
+    }
+  }
+}
