@@ -1,0 +1,22 @@
+test/lsp-bridge-test.el
+  s_fafb7f972fddab::t_e4c77553135b9d 1-6,10-31
+  s_fafb7f972fddab::t_82d19f1c69c9ec 7-9
+acm/acm-frame.el
+  s_fafb7f972fddab::t_d7389f07aec49c 91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "07e4d8b0eb7195baf6a29857fd11a51bcc36783c",
+  "prompts": {},
+  "sessions": {
+    "s_fafb7f972fddab": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a19246-9ebe-7457-82d7-1ced02c15e74",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "James L. <nailuogg@gmail.com>"
+    }
+  }
+}
